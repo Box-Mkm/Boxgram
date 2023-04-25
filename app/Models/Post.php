@@ -11,6 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Post extends Model
 {
     use HasFactory;
+    protected $fillable = ['description', 'slug','image','user_id'];
     public function owner(): BelongsTo
     {
         return $this->belongsTo(related: User::class,foreignKey: 'user_id');
