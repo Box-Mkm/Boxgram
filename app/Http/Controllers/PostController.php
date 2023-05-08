@@ -85,7 +85,7 @@ class PostController extends Controller
     {
         Storage::delete('public/' . $post->image);
         $post->delete();
-        return redirect(url(path: 'home'));
+        return redirect(url(path: ''));
     }
 
     public function explore()
