@@ -15,7 +15,7 @@
             <div class="flex flex-row text-sm dark:text-white">
                 <div class="mr-5">
                     <a href="/{{ auth()->user()->username }}">
-                        <img src="{{ auth()->user()->image }}" alt="{{ auth()->user()->username }}"
+                        <img src="storage{{ auth()->user()->image }}" alt="{{ auth()->user()->username }}"
                             class="border border-gray-300 rounded-full h-12 w-12">
                     </a>
                 </div>
@@ -32,15 +32,16 @@
                     @foreach ($suggested_users as $suggested_user)
                         <li class="flex flex-row my-5 text-sm justify-items-center">
                             <div class="mr-5">
-                            <a href="/{{ $suggested_user->username }}">
-                                <img src="{{ $suggested_user->image }}" class="rounded-full h-9 w-9"
-                                    alt="{{ $suggested_user->username }}">
-                            </a>
-                        </div>
-                        <div class="flex flex-col grow">
-                            <a href="/{{$suggested_user->username}}" class="font-bold dark:text-white">{{$suggested_user->username}}</a>
-                        <div class="text-gray-500 text-sm">{{$suggested_user->name}}</div>
-                        </div>
+                                <a href="/{{ $suggested_user->username }}">
+                                    <img src="{{ $suggested_user->image }}" class="rounded-full h-9 w-9"
+                                        alt="{{ $suggested_user->username }}">
+                                </a>
+                            </div>
+                            <div class="flex flex-col grow">
+                                <a href="/{{ $suggested_user->username }}"
+                                    class="font-bold dark:text-white">{{ $suggested_user->username }}</a>
+                                <div class="text-gray-500 text-sm">{{ $suggested_user->name }}</div>
+                            </div>
                         </li>
                     @endforeach
                 </ul>

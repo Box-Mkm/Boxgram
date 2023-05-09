@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\UserController;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -42,7 +43,7 @@ class PostController extends Controller
         $data['image'] = $image;
         $data['slug'] = Str::random(10);
         auth()->user()->posts()->create($data);
-        return redirect()->back();
+        return redirect()->action([UserController::class, 'index'], ['user' => auth()->user()->username]);
     }
 
     /**
@@ -85,7 +86,7 @@ class PostController extends Controller
     {
         Storage::delete('public/' . $post->image);
         $post->delete();
-        return redirect(url(path: ''));
+        return redirect()->action([UserController::class, 'index'], ['user' => auth()->user()->username]);
     }
 
     public function explore()

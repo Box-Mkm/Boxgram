@@ -22,6 +22,8 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'bio',
+        'private_account',
         'username',
         'image',
         'email',
@@ -59,6 +61,6 @@ class User extends Authenticatable
     }
     public function suggested_users()
     {
-        return User::whereNot('id',auth()->id())->get()->shuffle()->take(5);
+        return User::whereNot('id', auth()->id())->get()->shuffle()->take(5);
     }
 }
