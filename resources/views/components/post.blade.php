@@ -8,8 +8,19 @@
             <img src="{{ asset('storage/' . $post->image) }}"class="h-auto w-full object-cover"
                 alt="{{ $post->description }}">
         </div>
+        <div class="p-3">
+            <a href="/p/{{ $post->slug }}/like">
+                @if ($post->liked(auth()->user()))
+                    <i class="bx bxs-heart text-red-600 text-3xl hover:text-gray400 cursor-pointer mr-3"></i>
+                @else
+                    <i
+                        class="bx bx-heart text-3xl hover:text-gray-400 cursor-pointer mr-3 dark:text-gray-200 dark:hover:text-white"></i>
+                @endif
+            </a>
+        </div>
         <div class="p-3 flex flex-row dark:text-gray-300">
-            <a href="{{ $post->owner->username }}" class="font-bold mr-1 dark:text-white">{{ $post->owner->username }}</a>
+            <a href="{{ $post->owner->username }}"
+                class="font-bold mr-1 dark:text-white">{{ $post->owner->username }}</a>
             {{ $post->description }}
         </div>
         @if ($post->comments()->count() > 0)
@@ -26,8 +37,9 @@
             @csrf
             <div class="flex flex-row">
                 <textarea name="body" placeholder="{{ __('Add a comment') }}" autocomplete="off" autocorrect="off"
-                class="grow border-none resize-none focus:ring-0 outline-0 bg-none max-h-60 h-5 p-0 overflow-y-hidden placeholder-gray-400 dark:bg-gray-800 rounded"></textarea>
-                <button type="submit" class="bg-white border-none text-blue-500 ml-5 dark:bg-gray-800">{{ __('Post') }}</button>
+                    class="grow border-none resize-none focus:ring-0 outline-0 bg-none max-h-60 h-5 p-0 overflow-y-hidden placeholder-gray-400 dark:bg-gray-800 rounded"></textarea>
+                <button type="submit"
+                    class="bg-white border-none text-blue-500 ml-5 dark:bg-gray-800">{{ __('Post') }}</button>
             </div>
         </form>
     </div>
