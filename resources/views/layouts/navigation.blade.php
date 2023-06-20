@@ -14,6 +14,23 @@
 
             <!-- Settings Dropdown -->
             <div class="hidden sm:flex sm:items-center sm:ml-6">
+                @guest
+                    <div class="hidden md:flex md:items-center md:space-x-2">
+                        <div class="space-x-3 text-[1.6rem] mr-2 leading-5">
+                            <a href="/login"
+                                class="inline-flex items-center px-4 py-2 bg-gray800 border border-transparent rounded-md font-semibold text-xs text-black uppercase tracking-widest mr-2 dark:text-gray-200">{{ __('loging') }}</a>
+                            <a href="/register"
+                                class="inline-flex items-center px-4 py-2 font-semibold text-xs uppercase tracking-widest text-blue-500 dark:text-blue-400">{{ __('register') }}</a>
+                            <input data-hs-theme-switch
+                                class="relative w-[3.25rem] h-7 bg-gray-100 checked:bg-none checked:bg-blue-600 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 border border-transparent ring-1 ring-transparent focus:border-slate-700 focus:ring-slate-700 focus:outline-none appearance-none
+
+                                before:inline-block before:w-6 before:h-6 before:bg-white checked:before:bg-blue-200 before:translate-x-0 checked:before:translate-x-full before:shadow before:rounded-full before:transform before:ring-0 before:transition before:ease-in-out before:duration-200
+
+                                after:absolute after:right-1.5 after:top-[calc(50%-0.40625rem)] after:w-[.8125rem] after:h-[.8125rem] after:bg-no-repeat after:bg-[right_center] after:bg-[length:.8125em_.8125em] after:bg-[url('../svg/illustration/moon-stars.svg')] checked:after:bg-[url('../svg/illustration/brightness-high.svg')] after:transform after:transition-all after:ease-in-out after:duration-200 after:opacity-70 checked:after:left-1.5 checked:after:right-auto"
+                                type="checkbox" id="darkSwitch">
+                        </div>
+                    </div>
+                @endguest
                 @auth
                     <div class="flex items-center space-x-3">
                         <div class="space-x-3 text-[1.6rem] mr-2 leading-5">
@@ -35,39 +52,45 @@
                         </div>
                     </div>
                 @endauth
-                <x-dropdown align="right" width="48">
-                    <x-slot name="trigger">
-                        <div class="ml-4">
-                            <img src="storage{{ auth()->user()->image }}" class="w-10 h-10 rounded-full">
-                        </div>
-                    </x-slot>
+                {{-- tssss --}}
+                @auth
+                    <div class="hidden md:block">
+                        <x-dropdown align="right" width="48">
+                            <x-slot name="trigger">
+                                <div class="ml-4">
+                                    {{-- src="{{ asset('storage/' . $user->image) }}" --}}
+                                    <img src="{{ auth()->user()->image }}" class="w-10 h-10 rounded-full">
+                                </div>
+                            </x-slot>
 
-                    <x-slot name="content">
-                        <x-dropdown-link :href="route('user_profile', auth()->user())">{{ __('Profile') }}</x-dropdown-link>
+                            <x-slot name="content">
+                                <x-dropdown-link :href="route('user_profile', auth()->user())">{{ __('Profile') }}</x-dropdown-link>
 
-                        <!-- Authentication and dark mode -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                            {{-- dark mode --}}
-                            <x-dropdown-link>
-                                <input data-hs-theme-switch
-                                    class="relative w-[3.25rem] h-7 bg-gray-100 checked:bg-none checked:bg-blue-600 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 border border-transparent ring-1 ring-transparent focus:border-slate-700 focus:ring-slate-700 focus:outline-none appearance-none
+                                <!-- Authentication and dark mode -->
+                                <form method="POST" action="{{ route('logout') }}">
+                                    @csrf
+                                    {{-- dark mode --}}
+                                    <x-dropdown-link>
+                                        <input data-hs-theme-switch
+                                            class="relative w-[3.25rem] h-7 bg-gray-100 checked:bg-none checked:bg-blue-600 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 border border-transparent ring-1 ring-transparent focus:border-slate-700 focus:ring-slate-700 focus:outline-none appearance-none
 
                                 before:inline-block before:w-6 before:h-6 before:bg-white checked:before:bg-blue-200 before:translate-x-0 checked:before:translate-x-full before:shadow before:rounded-full before:transform before:ring-0 before:transition before:ease-in-out before:duration-200
 
                                 after:absolute after:right-1.5 after:top-[calc(50%-0.40625rem)] after:w-[.8125rem] after:h-[.8125rem] after:bg-no-repeat after:bg-[right_center] after:bg-[length:.8125em_.8125em] after:bg-[url('../svg/illustration/moon-stars.svg')] checked:after:bg-[url('../svg/illustration/brightness-high.svg')] after:transform after:transition-all after:ease-in-out after:duration-200 after:opacity-70 checked:after:left-1.5 checked:after:right-auto"
-                                    type="checkbox" id="darkSwitch">
-                            </x-dropdown-link>
-                            <x-dropdown-link :href="route('logout')"
-                                onclick="event.preventDefault();
+                                            type="checkbox" id="darkSwitch">
+                                    </x-dropdown-link>
+                                    <x-dropdown-link :href="route('logout')"
+                                        onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Log Out') }}
-                            </x-dropdown-link>
-                        </form>
-                    </x-slot>
-                </x-dropdown>
+                                        {{ __('Log Out') }}
+                                    </x-dropdown-link>
+                                </form>
+                            </x-slot>
+                        </x-dropdown>
+                    </div>
+                    {{-- tsss --}}
+                @endauth
             </div>
-
             <!-- Hamburger -->
             <div class="-mr-2 flex items-center sm:hidden">
                 <button @click="open = ! open"
@@ -88,28 +111,39 @@
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
 
         <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
-            <div class="px-4">
-                <div class="font-medium text-base text-gray-800 dark:text-gray-200">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
-            </div>
+        <div class="pt-4 pb-1 border-t border-gray-200">
+            @guest
+                <x-responsive-nav-link :href="route('login')">{{ __('Login') }}</x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('register')">{{ __('Register') }}</x-responsive-nav-link>
+                <x-responsive-nav-link><input data-hs-theme-switch
+                        class="relative w-[3.25rem] h-7 bg-gray-100 checked:bg-none checked:bg-blue-600 border-2 border-transparent rounded-full cursor-pointer transition-colors ease-in-out duration-200 border border-transparent ring-1 ring-transparent focus:border-slate-700 focus:ring-slate-700 focus:outline-none appearance-none
 
-            <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
-                </x-responsive-nav-link>
+        before:inline-block before:w-6 before:h-6 before:bg-white checked:before:bg-blue-200 before:translate-x-0 checked:before:translate-x-full before:shadow before:rounded-full before:transform before:ring-0 before:transition before:ease-in-out before:duration-200
 
-                <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-
-                    <x-responsive-nav-link :href="route('logout')"
-                        onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                        {{ __('Log Out') }}
+        after:absolute after:right-1.5 after:top-[calc(50%-0.40625rem)] after:w-[.8125rem] after:h-[.8125rem] after:bg-no-repeat after:bg-[right_center] after:bg-[length:.8125em_.8125em] after:bg-[url('../svg/illustration/moon-stars.svg')] checked:after:bg-[url('../svg/illustration/brightness-high.svg')] after:transform after:transition-all after:ease-in-out after:duration-200 after:opacity-70 checked:after:left-1.5 checked:after:right-auto"
+                        type="checkbox" id="darkSwitch"></x-responsive-nav-link>
+            @endguest
+            @auth
+                <div class="px-4">
+                    <div class="font-medium text-base text-gray-800 dark:text-gray-200">{{ Auth::user()->name }}</div>
+                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                </div>
+                <div class="mt-3 space-y-1">
+                    <x-responsive-nav-link :href="route('user_profile', auth()->user())">{{ __('Profile') }}
                     </x-responsive-nav-link>
-                </form>
-            </div>
+
+                    <!-- Authentication -->
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+
+                        <x-responsive-nav-link :href="route('logout')"
+                            onclick="event.preventDefault();
+                                        this.closest('form').submit();">
+                            {{ __('Log Out') }}
+                        </x-responsive-nav-link>
+                    </form>
+                </div>
+            @endauth
         </div>
     </div>
 </nav>

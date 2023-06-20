@@ -5,7 +5,7 @@
             @forelse ($posts as $post)
                 <x-post :post="$post" />
             @empty
-                <div class="max-w-2xl gap-8 mx-auto">
+                <div class="max-w-2xl gap-8 mx-auto dark:text-white">
                     {{ __('Start Following Your Friends and Enjoy.') }}
                 </div>
             @endforelse
@@ -39,9 +39,19 @@
                             </div>
                             <div class="flex flex-col grow">
                                 <a href="/{{ $suggested_user->username }}"
-                                    class="font-bold dark:text-white">{{ $suggested_user->username }}</a>
+                                    class="font-bold dark:text-white">{{ $suggested_user->username }}
+                                    @if (auth()->user()->is_follower($suggested_user))
+                                        <span class="text-xs text-gray-500 dark:text-white">{{ __('Follower') }}</span>
+                                    @endif
+                                </a>
                                 <div class="text-gray-500 text-sm">{{ $suggested_user->name }}</div>
                             </div>
+                            @if (auth()->user()->is_pending($suggested_user))
+                                <span class="text-gray-500 font-bold dark:text-white">{{ __('pending') }}</span>
+                            @else
+                                <a href="/{{ $suggested_user->username }}/follow"
+                                    class="text-blue-500 font-bold">{{ __('follow') }}</a>
+                            @endif
                         </li>
                     @endforeach
                 </ul>

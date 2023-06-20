@@ -13,9 +13,10 @@
                     <img src="{{ $post->owner->image }}" alt="{{ $post->owner->username }}"
                         class="mr-5 h-10 w-10 rounded-full ">
                     <div class="grow">
-                        <a href="/{{ $post->owner->username }}"class="font-bold dark:text-white">{{ $post->owner->username }}</a>
+                        <a
+                            href="/{{ $post->owner->username }}"class="font-bold dark:text-white">{{ $post->owner->username }}</a>
                     </div>
-                    @if ($post->owner->id === auth()->id())
+                    @can('update', $post)
                         <a href="/p/{{ $post->slug }}/edit"><i
                                 class='bx bx-message-square-edit bx-tada-hover text-xl text-gray-500'></i></a>
                         <form action="/p/{{ $post->slug }}/delete" method="POST">
@@ -24,7 +25,20 @@
                             <button type="submit" onclick="return confirm('Are You Sure?')">
                                 <i class="bx bx-message-square-x ml-2 text-xl text-red-600 bx-tada-hover"></i></button>
                         </form>
-                    @endif
+                    @endcan
+                    @cannot('update', $post)
+                        @if (auth()->user()->is_following($post->owner))
+                            <a href="/{{ $post->owner->username }}/unfollow"
+                                class="w-30 text-blue-400 text-sm font-bold px-3 text-center">
+                                {{ __('unfollow') }}
+                            </a>
+                        @else
+                            <a href="/{{ $post->owner->username }}/follow"
+                                class="w-30 text-blue-400 text-sm font-bold px-3 text-center">
+                                {{ __('follow') }}
+                            </a>
+                        @endif
+                    @endcannot
                 </div>
             </div>
             {{-- middle --}}
@@ -32,7 +46,8 @@
                 <div class="flex items-start p-5">
                     <img src="{{ $post->owner->image }}" class="mr-5 h-10 w-10 rounded-full">
                     <div>
-                        <a href="{{ $post->owner->username }}" class="font-bold dark:text-white">{{ $post->owner->username }}</a>
+                        <a href="{{ $post->owner->username }}"
+                            class="font-bold dark:text-white">{{ $post->owner->username }}</a>
                         {{ $post->description }}
                     </div>
                 </div>
@@ -40,8 +55,8 @@
                 <div>
                     @foreach ($post->comments as $comment)
                         <div class="flex items-start px-5 py-2">
-                            <img src="{{ $comment->owner->image }}" alt=""
-                                class="h-100 mr-5 w-10 rounded-full">
+                            <img src="/storage{{ $comment->owner->image }}" alt="img"
+                                class="h-10 mr-5 w-10 rounded-full">
                             <div class="flex flex-col">
                                 <div>
                                     <a href="/{{ $comment->owner->username }}"
@@ -62,7 +77,8 @@
                     <div class="flex flex-row">
                         <textarea name="body" id="comment_body" placeholder="Add a comment ..."
                             class="h-5 grow resize-none overflow-hidden border-none bg-none p-0 placeholder-gray-400 outline-0 foucs:ring-0 dark:bg-gray-800"></textarea>
-                        <button type="submit" class="ml-5 border-none bg-white text-blue-500 dark:bg-gray-800">Post</button>
+                        <button type="submit"
+                            class="ml-5 border-none bg-white text-blue-500 dark:bg-gray-800">Post</button>
                     </div>
                 </form>
             </div>

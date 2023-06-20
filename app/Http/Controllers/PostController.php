@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use App\Providers\PostPolicy;
 
 class PostController extends Controller
 {
@@ -16,7 +17,9 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = Post::all();
+        // $posts = Post::all();
+        $ids = auth()->user()->following()->wherePivot('confirmed', true)->get()->pluck('id');
+        $posts = Post::whereIn('user_id', $ids)->latest()->get();
         $suggested_users = auth()->user()->suggested_users();
         return view('posts.index', compact(['posts', 'suggested_users']));
     }
@@ -59,6 +62,7 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        $this->authorize('update', $post);
         return view('posts.edit', compact('post'));
     }
 
@@ -67,6 +71,7 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        $this->authorize('update', $post);
         $data = $request->validate([
             'description' => 'required',
             'image' => ['nullable', 'mimes:png,jpg,jpeg,gif']
@@ -84,6 +89,7 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        $this->authorize('delete', $post);
         Storage::delete('public/' . $post->image);
         $post->delete();
         return redirect()->action([UserController::class, 'index'], ['user' => auth()->user()->username]);
