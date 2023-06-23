@@ -27,17 +27,7 @@
                         </form>
                     @endcan
                     @cannot('update', $post)
-                        @if (auth()->user()->is_following($post->owner))
-                            <a href="/{{ $post->owner->username }}/unfollow"
-                                class="w-30 text-blue-400 text-sm font-bold px-3 text-center">
-                                {{ __('unfollow') }}
-                            </a>
-                        @else
-                            <a href="/{{ $post->owner->username }}/follow"
-                                class="w-30 text-blue-400 text-sm font-bold px-3 text-center">
-                                {{ __('follow') }}
-                            </a>
-                        @endif
+                        <livewire:follow :post="$post" :userId="$post->owner->id" classes="text-blue-500" />
                     @endcannot
                 </div>
             </div>
