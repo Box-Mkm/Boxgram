@@ -70,7 +70,18 @@
                         </div>
                     @endforeach
                 </div>
+
             </div>
+            {{-- likes and comments --}}
+            <div class="p-3 border-t-2 dark:border-gray-600 flex flex-row">
+                <livewire:like :post="$post" />
+                <a class="grow" onclick="document.getElementById('comment_body').focus()">
+                    <i
+                        class="bx bx-comment text-3xl hover:text-gray-400 cursor-pointer mr-3 dark:text-gray-300 dark:hover:text-white">
+                    </i>
+                </a>
+            </div>
+            <livewire:likedby :post="$post" />
             <div class="div border-t-2 dark:border-t-gray-600 p-5">
                 <form action="/p/{{ $post->slug }}/comment" method="POST">
                     @csrf
@@ -82,6 +93,7 @@
                     </div>
                 </form>
             </div>
+
         </div>
     </div>
 </x-app-layout>
