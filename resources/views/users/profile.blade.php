@@ -6,7 +6,7 @@
     <div class="grid geid-col-4">
         {{-- userimage --}}
         <div class="px-4 col-span-1 order-1">
-            <img src="{{ asset('storage/' . $user->image) }}" alt="{{ $user->username }} profile picture"
+            <img src="{{ auth()->user()->image }}" alt="{{ $user->username }} profile picture"
                 class="rounded-full w-20 h-20 md:w-20 borded border-neutral-300 ">
         </div>
         {{-- username and buttons --}}
@@ -19,8 +19,9 @@
                             class="w-50 border text-sm font-bold px-5 py-1 dark:border-none dark:text-gray-300">
                             {{ __('Edit Profile') }}
                         </a>
+                    @else
+                        <livewire:follow-button :userId="$user->id" classes="bg-blue-500 text-white" />
                     @endif
-                    <livewire:follow :userId="$user->id" classes="bg-blue-500 text-white" />
                 @endauth
                 @guest
                     <a href="/{{ $user->username }}/follow"
@@ -53,14 +54,7 @@
                         {{ $user->followers()->count() > 1 ? __('followers') : __('follower') }}
                     </span>
                 </li>
-                <li class="flex flex-col md:flex-row text-center">
-                    <div class="md:mr-1 font-bold md:font-normal">
-                        {{ $user->following()->wherepivot('confirmed', true)->get()->count() }}
-                    </div>
-                    <span class="text-neutral-500 md:text-black dark:text-white">
-                        {{ __('following') }}
-                    </span>
-                </li>
+                <livewire:following :userId="$user->id" />
             </ul>
         </div>
     </div>
