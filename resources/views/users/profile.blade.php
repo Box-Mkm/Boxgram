@@ -6,8 +6,8 @@
     <div class="grid geid-col-4">
         {{-- userimage --}}
         <div class="px-4 col-span-1 order-1">
-            <img src="{{ auth()->user()->getImage() }}" alt="{{ $user->username }} profile picture"
-                class="rounded-full w-20 h-20 md:w-20 borded border-neutral-300 ">
+            <img src="{{ $user->getImage() }}" alt="{{ $user->username }} profile picture"
+                class="rounded-full h-40 w-40 border-2 border-neutral-300 mt-6">
         </div>
         {{-- username and buttons --}}
         <div class="px-4 col-span-2 md:ml-0 flex flex-row items-center order-2 md:col-span-3">

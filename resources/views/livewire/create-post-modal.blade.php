@@ -1,6 +1,7 @@
 <div>
     <div class="h-[50rem] flex flex-col justify-center">
-        <div class="w-5xl flex items-center border-b border-b-2 border-b-neutral-100 p-2">
+        <div
+            class="w-5xl flex items-center border-b border-b-2 border-b-neutral-100 dark:border-gray-500 p-2 dark:bg-gray-900 dark:text-white">
             <h1 class="text-lg text-center grow">{{ __('Create New Post') }}</h1>
             @if ($image)
                 <button class="font-bold text-blue-400 mr-3" wire:click="save_temp">{{ __('Next') }}</button>
@@ -10,7 +11,7 @@
             <img class="h-full w-auto object-cover" src="{{ $image->temporaryUrl() }}">
         @endif
         @if (!$image)
-            <div class="grow flex flex-col h-full items-center justify-center">
+            <div class="grow flex flex-col h-full items-center justify-center dark:bg-gray-900">
                 <div class="mb-4">
                     <svg aria-label="Icon to represent media such as images or videos" class="_ab6-" color="#262626"
                         fill="#262626" height="77" role="img" viewBox="0 0 97.6 77.3" width="96">
@@ -26,7 +27,8 @@
                     </svg>
                 </div>
                 <div class="text-center mb-5">
-                    <input type="file" id="fileInput" wire:model="image" class="hidden">
+                    <input type="file" id="fileInput" wire:model="image"
+                        class="hidden dark:bg-gray-500 dark:text-white">
                     <x-button onclick="document.getElementById('fileInput').click()">{{ __('Select from Computer') }}
                     </x-button>
                 </div>

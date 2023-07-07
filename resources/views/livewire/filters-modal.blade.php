@@ -19,7 +19,7 @@
         <div class="mt-auto flex flex-row items-center">
             <div>
                 <img src="{{ auth()->user()->getImage() }}"
-                    class="w-10 h-10 mr-2 rounded-full border borded-netural-300">
+                    class="w-10 h-10 mr-2 rounded-full border border-netural-300">
             </div>
             <div class="flex flex-col grow">
                 <div class="font-bold">
