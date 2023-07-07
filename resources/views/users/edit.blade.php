@@ -56,11 +56,22 @@
                                     {{ $user->private_account ? 'checked' : '' }}>
                             </div>
                             <div>
-                                <div class="ml-3 text-sm">
+                                <div class="ltr:ml-3 rtl:mr-3 text-sm">
                                     <label for="private_account"
                                         class="font-medium text-gray-700">{{ __('Private Account') }}</label>
                                 </div>
                             </div>
+                        </div>
+                        <div class="col-span-6 sm:col-span-3">
+                            <label for="lang"
+                                class="block text-sm font-medium text-gray-700">{{ __('Language') }}</label>
+                            <select name="lang" id="lang"
+                                class="mt-1 block w-full rounded-md border border-gray-300 bg-white py-2 ltr:px-3 rtl:px-8 shadow-sm foucs:border-indigo-500 foucs:outline-none">
+                                <option value="ar" {{ app()->getLocale() == 'ar' ? 'selected' : ' ' }}>العربيه
+                                </option>
+                                <option value="en" {{ app()->getLocale() == 'en' ? 'selected' : ' ' }}>English
+                                </option>
+                            </select>
                         </div>
                     </div>
                 </div>
