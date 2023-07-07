@@ -44,11 +44,9 @@
                                     ? '<i class="bx bx-compass dark:text-white" ></i>'
                                     : '<i class="bx bx-compass dark:text-white"></i>' !!}
                             </a>
-                            <a href="{{ route('create_post') }}">
-                                {!! url()->current() == route('create_post')
-                                    ? '<i class="bx bx-message-square-add dark:text-white" ></i>'
-                                    : '<i class="bx bx-message-square-add dark:text-white"></i>' !!}
-                            </a>
+                            <button onclick="Livewire.emit('openModal','create-post-modal')">
+                                <i class="bx bx-message-square-add dark:text-white"></i>
+                            </button>
                         </div>
                     </div>
                 @endauth
@@ -58,8 +56,7 @@
                         <x-dropdown align="right" width="48">
                             <x-slot name="trigger">
                                 <div class="ml-4">
-                                    {{-- src="{{ asset('storage/' . $user->image) }}" --}}
-                                    <img src="{{ auth()->user()->image }}" class="w-10 h-10 rounded-full">
+                                    <img src="{{ auth()->user()->getImage() }}" class="w-10 h-10 rounded-full">
                                 </div>
                             </x-slot>
 
@@ -129,6 +126,8 @@
                     <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
                 </div>
                 <div class="mt-3 space-y-1">
+                    <x-responsive-nav-link class="cursor-pointer" onclick="Livewire.emit('openModal','create-post-modal')">
+                        {{ __('New Post') }}</x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('user_profile', auth()->user())">{{ __('Profile') }}
                     </x-responsive-nav-link>
 

@@ -40,7 +40,7 @@
                         <label for="photo"
                             class="block text-sm font-medium leading-6 text-gray-900 dark:text-white">{{ __('Photo') }}</label>
                         <div class="mt-2 flex items-center gap-x-3">
-                            <img src="{{ auth()->user()->image }}" class="w-10 h-10 rounded-full">
+                            <img src="{{ auth()->user()->getImage() }}" class="w-10 h-10 rounded-full">
                             <input class="w-full border border-gray-200 bg-gray-50 block foucs:outline-none rounded-xl"
                                 name="image" id="file_input" type="file">
                         </div>

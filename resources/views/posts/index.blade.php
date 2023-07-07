@@ -15,7 +15,7 @@
             <div class="flex flex-row text-sm dark:text-white">
                 <div class="mr-5">
                     <a href="/{{ auth()->user()->username }}">
-                        <img src="{{ auth()->user()->image }}" alt="{{ auth()->user()->username }}"
+                        <img src="{{ auth()->user()->getImage() }}" alt="{{ auth()->user()->username }}"
                             class="border border-gray-300 rounded-full h-12 w-12">
                     </a>
                 </div>
@@ -33,7 +33,7 @@
                         <li class="flex flex-row my-5 text-sm justify-items-center">
                             <div class="mr-5">
                                 <a href="/{{ $suggested_user->username }}">
-                                    <img src="{{ $suggested_user->image }}" class="rounded-full h-9 w-9"
+                                    <img src="{{ $suggested_user->getImage() }}" class="rounded-full h-9 w-9"
                                         alt="{{ $suggested_user->username }}">
                                 </a>
                             </div>

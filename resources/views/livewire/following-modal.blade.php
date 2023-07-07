@@ -7,7 +7,7 @@
         @forelse ($this->following_list as $following)
             <li class="flex flex-row items-center p-3 text-sm">
                 <div>
-                    <img src="{{ $following->image }}" class="w-8 h-8 rounded-full border border-neutral-300 mr-4"
+                    <img src="{{ $following->getImage() }}" class="w-8 h-8 rounded-full border border-neutral-300 mr-4"
                         alt="{{ $following->username }}">
                 </div>
                 <div class="flex grow flex-col">

@@ -6,7 +6,7 @@
     <div class="grid geid-col-4">
         {{-- userimage --}}
         <div class="px-4 col-span-1 order-1">
-            <img src="{{ auth()->user()->image }}" alt="{{ $user->username }} profile picture"
+            <img src="{{ auth()->user()->getImage() }}" alt="{{ $user->username }} profile picture"
                 class="rounded-full w-20 h-20 md:w-20 borded border-neutral-300 ">
         </div>
         {{-- username and buttons --}}

@@ -10,15 +10,17 @@
             {{-- top --}}
             <div class="border-b-2 dark:border-b-gray-600">
                 <div class="flex items-center p-5">
-                    <img src="{{ $post->owner->image }}" alt="{{ $post->owner->username }}"
+                    <img src="{{ $post->owner->getImage() }}" alt="{{ $post->owner->username }}"
                         class="mr-5 h-10 w-10 rounded-full ">
                     <div class="grow">
                         <a
                             href="/{{ $post->owner->username }}"class="font-bold dark:text-white">{{ $post->owner->username }}</a>
                     </div>
                     @can('update', $post)
-                        <a href="/p/{{ $post->slug }}/edit"><i
-                                class='bx bx-message-square-edit bx-tada-hover text-xl text-gray-500'></i></a>
+                        {{-- <a href="/p/{{ $post->slug }}/edit"><i
+                                class='bx bx-message-square-edit bx-tada-hover text-xl text-gray-500'></i></a> --}}
+                        <button onclick="Livewire.emit('openModal' , 'edit-post-modal', {{ json_encode([$post->id]) }})"><i
+                                class='bx bx-message-square-edit bx-tada-hover text-xl text-gray-500'></i></button>
                         <form action="/p/{{ $post->slug }}/delete" method="POST">
                             @csrf
                             @method('DELETE')
@@ -34,7 +36,7 @@
             {{-- middle --}}
             <div class="div grow overflow-y-auto">
                 <div class="flex items-start p-5">
-                    <img src="{{ $post->owner->image }}" class="mr-5 h-10 w-10 rounded-full">
+                    <img src="{{ $post->owner->getImage() }}" class="mr-5 h-10 w-10 rounded-full">
                     <div>
                         <a href="{{ $post->owner->username }}"
                             class="font-bold dark:text-white">{{ $post->owner->username }}</a>
@@ -45,7 +47,7 @@
                 <div>
                     @foreach ($post->comments as $comment)
                         <div class="flex items-start px-5 py-2">
-                            <img src="/storage{{ $comment->owner->image }}" alt="img"
+                            <img src="/storage{{ $comment->owner->getImage() }}" alt="img"
                                 class="h-10 mr-5 w-10 rounded-full">
                             <div class="flex flex-col">
                                 <div>
