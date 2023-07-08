@@ -47,7 +47,7 @@
                 <div>
                     @foreach ($post->comments as $comment)
                         <div class="flex items-start px-5 py-2">
-                            <img src="/storage{{ $comment->owner->getImage() }}" alt="img"
+                            <img src="{{ $comment->owner->getImage() }}" alt="img"
                                 class="h-10 mr-5 w-10 rounded-full">
                             <div class="flex flex-col">
                                 <div>
